@@ -1,0 +1,564 @@
+/* ── Sus Commitment ───────────────────────────────────────── */
+
+@keyframes sus-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sus-text-reveal {
+  from {
+    opacity: 0;
+    mask-size: 0% 100%;
+    -webkit-mask-size: 0% 100%;
+  }
+  to {
+    opacity: 1;
+    mask-size: 140% 100%;
+    -webkit-mask-size: 140% 100%;
+  }
+}
+
+.sus-commitment {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.sus-commitment__bg,
+.sus-commitment__overlay {
+  position: absolute;
+  inset: 0;
+}
+
+.sus-commitment__bg {
+  background-color: #0d0c0b;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1);
+  animation: heroZoomIn 14s ease-out 1s forwards;
+}
+
+.sus-commitment__overlay {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.1) 100%);
+  pointer-events: none;
+}
+
+.sus-commitment__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+  padding: 100px 60px;
+  max-width: 715px;
+}
+
+.sus-commitment__eyebrow {
+  margin: 0 0 4px;
+  color: #FFFFFFB2;
+  mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  mask-repeat: no-repeat;
+  animation: sus-text-reveal 1.2s ease-out 1.3s both;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-commitment__title {
+  margin: 0 0 16px;
+  color: #ffffff;
+  mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  mask-repeat: no-repeat;
+  animation: sus-text-reveal 1.4s ease-out 1.5s both;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-commitment__text {
+  margin: 0;
+  color: #FFFFFF;
+  mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
+  mask-repeat: no-repeat;
+  animation: sus-text-reveal 1.6s ease-out 1.8s both;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+@media (max-width: 959px) {
+  .sus-commitment__content {
+    padding: 100px 24px 48px;
+    max-width: 100%;
+  }
+}
+
+/* ── /Sus Commitment ──────────────────────────────────────── */
+
+
+/* ── /Sus Animations ──────────────────────────────────────── */
+
+/* ── Sus Journey ──────────────────────────────────────────── */
+
+.sus-journey {
+  background: #191919;
+  padding: 130px 60px;
+}
+
+.sus-journey__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0 40px;
+  align-items: start;
+}
+
+.sus-journey__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.sus-journey__eyebrow {
+  margin: 0 0 24px;
+  color: #777777;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-journey__title {
+  margin: 0;
+  color: #ffffff;
+  white-space: pre-line;
+  font-family: "Masicu", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+.sus-journey__step {
+  display: flex;
+  flex-direction: column;
+}
+
+.sus-journey__step-number {
+  margin: 0 0 8px;
+  color: #FFFFFF;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0.6px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-journey__step-line {
+  height: 1px;
+  background: #FFFFFF33;
+  margin-bottom: 16px;
+}
+
+.sus-journey__step-heading {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+.sus-journey__step-text {
+  margin: 0;
+  color: #FFFFFFB2;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+@media (max-width: 959px) {
+  .sus-journey {
+    padding: 72px 24px;
+  }
+
+  .sus-journey__grid {
+    grid-template-columns: 1fr;
+    gap: 48px 0;
+  }
+}
+
+
+/* ── /Sus Journey ─────────────────────────────────────────── */
+
+/* ── Sus Lifecycle ────────────────────────────────────────── */
+
+.sus-lifecycle {
+  display: grid;
+  grid-template-columns: 4fr 5fr;
+  background: #FFFFFF;
+  padding: 130px 60px;
+  gap: 0 60px;
+}
+
+.sus-lifecycle__left {
+  position: sticky;
+  top: 100px;
+  align-self: start;
+}
+
+.sus-lifecycle__label {
+  margin: 0;
+  color: #000000;
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 109.00000000000001%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-lifecycle__right {
+  display: flex;
+  flex-direction: column;
+}
+
+.sus-lifecycle__item {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid #0000001A;
+}
+
+.sus-lifecycle__item:first-child {
+  padding-top: 0;
+}
+
+.sus-lifecycle__item:last-child {
+  border-bottom: none;
+}
+
+.sus-lifecycle__item-icon-wrap {
+  flex-shrink: 0;
+  width: 58px;
+  height: 58px;
+  background: #F5F5F5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sus-lifecycle__item-icon {
+  width: 18px!important;
+  height: 18px!important;
+  object-fit: contain;
+  position: relative!important;
+}
+
+.sus-lifecycle__item-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sus-lifecycle__item-title {
+  margin: 0;
+  color: #000000;
+  font-weight: 450;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-lifecycle__item-text {
+  margin: 0;
+  color: #00000080;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+
+@media (max-width: 959px) {
+  .sus-lifecycle {
+    grid-template-columns: 1fr;
+    padding: 72px 24px;
+    gap: 48px 0;
+  }
+
+  .sus-lifecycle__left {
+    position: static;
+  }
+}
+
+/* ── /Sus Lifecycle ───────────────────────────────────────── */
+
+/* ── Sus Pillars ──────────────────────────────────────────── */
+
+.sus-pillars {
+  background: #F3F2F0;
+  padding: 130px 60px;
+}
+
+.sus-pillars__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.sus-pillars__heading {
+  margin: 0 0 16px;
+  color: #000000;
+  font-weight: 300;
+  font-size: 36px;
+  line-height: 109.00000000000001%;
+  letter-spacing: 0px;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-pillars__subtitle {
+  margin: 0;
+  color: #000000;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.sus-pillars__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0 40px;
+  align-items: start;
+}
+
+.sus-pillars__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.sus-pillars__item-number {
+  margin: 0 0 8px;
+  color: #777777;
+  font-weight: 300;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: 0.6px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-pillars__item-line {
+  height: 1px;
+  background: #0000001A;
+  margin-bottom: 16px;
+}
+
+.sus-pillars__item-title {
+  margin: 0 0 8px;
+  color: #171717;
+  font-weight: 450;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-pillars__item-text {
+  margin: 0;
+  color: #393939;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+
+@media (max-width: 959px) {
+  .sus-pillars {
+    padding: 72px 24px;
+  }
+
+  .sus-pillars__header {
+    margin-bottom: 56px;
+  }
+
+  .sus-pillars__grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 48px 32px;
+  }
+}
+
+@media (max-width: 560px) {
+  .sus-pillars__grid {
+    grid-template-columns: 1fr;
+    gap: 48px 0;
+  }
+}
+
+/* ── /Sus Pillars ─────────────────────────────────────────── */
+
+/* ── Sus CTA ──────────────────────────────────────────────── */
+
+.sus-cta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 90vh;
+}
+
+.sus-cta__image {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #c8c0b4;
+  min-height: 55vw;
+}
+
+.sus-cta__panel {
+  background: #191919;
+  display: flex;
+  align-items: center;
+  padding: 80px 60px;
+}
+
+.sus-cta__content {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+}
+
+.sus-cta__title {
+  margin: 0 0 24px;
+  color: #ffffff;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 109.00000000000001%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-cta__text {
+  margin: 0 0 32px;
+  color: #FFFFFFCC;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 28px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+.sus-cta__button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  padding: 13px 24px;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: transparent;
+  background-image:
+    linear-gradient(to top,   #FFFFFF33, #FFFFFF33),
+    linear-gradient(to right, #FFFFFF33, #FFFFFF33),
+    linear-gradient(to bottom,#FFFFFF33, #FFFFFF33),
+    linear-gradient(to left,  #FFFFFF33, #FFFFFF33);
+  background-size: 1px 0%, 0% 1px, 1px 0%, 0% 1px;
+  background-position: left bottom, left top, right top, right bottom;
+  background-repeat: no-repeat;
+  transition: color 0.35s ease, transform 0.25s ease;
+  animation: heroBorderDraw 1s ease-out both;
+  animation-play-state: paused;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.sus-cta__button[data-anim-state="in"] {
+  animation-play-state: running;
+}
+
+.sus-cta__button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: -1;
+}
+
+.sus-cta__button:hover {
+  color: #111;
+  transform: translateY(-1px);
+}
+
+.sus-cta__button:hover::before {
+  transform: scaleX(1);
+}
+
+
+@media (max-width: 900px) {
+  .sus-cta {
+    grid-template-columns: 1fr;
+    min-height: unset;
+  }
+
+  .sus-cta__image {
+    min-height: 60vw;
+  }
+
+  .sus-cta__panel {
+    padding: 64px 24px;
+  }
+
+  .sus-cta__content {
+    max-width: 100%;
+  }
+}
+
+/* ── /Sus CTA ─────────────────────────────────────────────── */

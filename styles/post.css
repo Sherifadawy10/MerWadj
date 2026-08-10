@@ -1,0 +1,337 @@
+/* ── Single Post Page ─────────────────────────────────────── */
+
+.post-page {
+  background: #FAF9F8;
+  min-height: 100vh;
+}
+
+/* Narrow container: 848px — header and body text */
+.post-narrow {
+  max-width: 848px;
+  margin: 0 auto;
+  padding: 128px 15px 0;
+}
+
+.post-narrow--body {
+  padding-top: 0;
+  padding-bottom: 80px;
+}
+
+/* Wide container: 1152px — cover image */
+.post-wide {
+  max-width: 1152px;
+  margin: 0 auto;
+  padding: 0 15px 64px;
+}
+
+/* Back link */
+.post-single__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #000000;
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+
+.post-single__meta {
+  text-transform: uppercase;
+  color: #444444;
+  margin-bottom: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+/* Title */
+.post-single__title {
+  font-family: 'Masicu', sans-serif;
+  color: #000000;
+  margin-bottom: 24px;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  animation: heroFadeIn 1.2s ease-out 1.5s both;
+}
+
+/* Excerpt */
+.post-single__excerpt {
+  color: #000000;
+  margin-bottom: 24px;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+/* Divider */
+.post-single__divider {
+  border: none;
+  border-top: 1px solid #0000004D;
+  margin: 0 0 32px;
+  animation: heroFadeIn 1.2s ease-out 1.65s both;
+}
+
+/* Author row */
+.post-single__author-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+}
+
+.post-single__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.post-single__author-photo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-single__author-photo--placeholder {
+  background: #e0dedd;
+}
+
+.post-single__author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.post-single__author-name {
+  font-family: "Futura PT", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111;
+  letter-spacing: 0.01em;
+}
+
+.post-single__author-role {
+  font-family: "Futura PT", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #999;
+}
+
+/* Share buttons */
+.post-share {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.post-share__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.post-share__btn:hover {
+  border-color: #111;
+  color: #111;
+  background: #f0efee;
+}
+
+/* Cover image */
+.post-single__cover-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 40px;
+  margin-bottom: 16px;
+}
+
+/* Caption */
+.post-single__caption {
+  color: #777777;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* ── Post content ─────────────────────────────────────────── */
+
+.post-single__content {
+  font-family: "Futura PT", sans-serif;
+  color: #333;
+}
+
+.post-single__content h2,
+.post-single__content h3,
+.post-single__content h4 {
+  color: #111;
+  font-size: 20px;
+  font-family: 'Masicu', sans-serif;
+  font-weight: 500;
+  line-height: 41.85px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+  margin: 32px 0 16px;
+}
+
+.post-single__content h2 {
+  font-size: 1.55rem;
+}
+
+.post-single__content h3 {
+  font-size: 20px;
+}
+
+.post-single__content p,
+.post-single__content li {
+  color: #444444;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+.post-single__content ul,
+.post-single__content ol {
+  padding-left: 1.5rem;
+}
+
+.post-single__content li + li {
+  margin-top: 0.4rem;
+}
+
+.post-single__content a {
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.post-single__content a:hover {
+  color: #666;
+}
+
+.post-single__content img {
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  display: block;
+  margin: 2rem 0;
+}
+
+/* Blockquote — WP generates .wp-block-quote */
+.post-single__content blockquote,
+.post-single__content .wp-block-quote {
+  border-left: 2px solid #000000;
+  margin: 40px 0;
+  padding: 0 0 0 24px;
+  background: transparent;
+}
+
+.post-single__content blockquote p,
+.post-single__content .wp-block-quote p {
+    color: #777777;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0px;
+    vertical-align: middle;
+}
+
+.post-single__content blockquote h4, .post-single__content .wp-block-quote h4{
+  color: #000000;
+  font-family: 'Masicu', sans-serif;
+  margin: 0 0 16px 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 41.85px;
+  letter-spacing: 0px;
+  vertical-align: middle;
+}
+
+.post-single__content blockquote cite,
+.post-single__content .wp-block-quote cite,
+.post-single__content .wp-block-quote footer {
+  display: block;
+  margin-top: 14px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #888;
+  font-style: normal;
+}
+
+/* WP figure/caption blocks */
+.post-single__content figure {
+  margin: 2.5rem 0;
+}
+
+.post-single__content figcaption {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  font-style: italic;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.post-single__content .wp-block-image {
+  margin: 2.5rem 0;
+}
+
+.post-single__content .wp-block-image img {
+  margin: 0;
+}
+
+/* Separator */
+.post-single__content hr,
+.post-single__content .wp-block-separator {
+  border: none;
+  border-top: 1px solid #e0dedd;
+  margin: 2.5rem 0;
+}
+
+@media (max-width: 600px) {
+  .post-single {
+    padding: 80px 16px 60px;
+  }
+
+  .post-single__title {
+    font-size: 1.75rem;
+  }
+
+  .post-single__excerpt {
+    font-size: 15px;
+  }
+
+  .post-single__content blockquote p,
+  .post-single__content .wp-block-quote p {
+    font-size: 1.05rem;
+  }
+}

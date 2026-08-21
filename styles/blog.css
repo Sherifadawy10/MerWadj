@@ -139,8 +139,8 @@
   background: #FFFFFF08;
   border: none;
   border-bottom: 1px solid #FFFFFF1A;
-  outline: none;
   color: #FFFFFFB2;
+  font-family: inherit;
   padding: 12px 16px;
   transition: border-color 0.2s ease;
   font-weight: 400;
@@ -150,7 +150,7 @@
 }
 
 .blog-subscribe__input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.58);
 }
 
 .blog-subscribe__input:focus {

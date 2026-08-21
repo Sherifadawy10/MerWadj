@@ -4,13 +4,20 @@ import MatCatalog from "@/components/MatCatalog";
 import MatCollection from "@/components/MatCollection";
 import PageReveal from "@/components/PageReveal";
 import { getPageBySlug, getStones } from "@/lib/wordpress";
+import { buildMetadata } from "@/lib/site";
+import { stripHtml } from "@/lib/html";
+
+export const revalidate = 300;
 
 export async function generateMetadata() {
   const page = await getPageBySlug("materials");
-  return {
-    title: page?.acf?.seo_title || page?.title?.rendered || "Materials — Merwadj",
-    description: page?.acf?.seo_description || "A refined selection of natural stone and interior finishes.",
-  };
+  return buildMetadata({
+    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Materials Catalog",
+    description:
+      page?.acf?.seo_description ||
+      "A refined selection of engineered stone and interior finishes for hospitality and commercial projects.",
+    path: "/materials",
+  });
 }
 
 export default async function MaterialsPage() {

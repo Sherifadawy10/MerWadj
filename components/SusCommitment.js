@@ -31,7 +31,7 @@ export default function SusCommitment({ page }) {
 
       <div className="sus-commitment__content">
         <p className="sus-commitment__eyebrow">{eyebrow}</p>
-        <h2 className="sus-commitment__title">{title}</h2>
+        <h1 className="sus-commitment__title">{title}</h1>
         <p className="sus-commitment__text">{text}</p>
       </div>
     </section>

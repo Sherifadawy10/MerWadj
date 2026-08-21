@@ -1,7 +1,8 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { getFooterOptions, getMediaById, getMenu } from "@/lib/wordpress";
+import { getFooterOptions, getMediaById, getMenu, withContactLink } from "@/lib/wordpress";
+import { stripHtml } from "@/lib/html";
 
 async function resolveImage(field) {
   if (!field) return null;
@@ -22,12 +23,20 @@ async function resolveImage(field) {
   return null;
 }
 
+/** Digits only, so the dialler gets something it can actually call. */
+function telHref(phone) {
+  const digits = String(phone).replace(/[^\d+]/g, "");
+  return digits.length >= 6 ? `tel:${digits}` : null;
+}
+
 export default async function Footer() {
-  const [options, footerNav, footerLegal] = await Promise.all([
+  const [options, rawFooterNav, footerLegal] = await Promise.all([
     getFooterOptions(),
     getMenu("footer_menu"),
     getMenu("footer_legal_menu"),
   ]);
+
+  const footerNav = withContactLink(rawFooterNav);
 
   const acfBg = await resolveImage(options?.["footer-background"]);
   const bgUrl = acfBg?.url || null;
@@ -39,18 +48,26 @@ export default async function Footer() {
   const copyright = options?.copiright || null;
 
   const rawSocials = Array.isArray(options?.social_links) ? options.social_links : [];
-  const socials = await Promise.all(
+  const resolvedSocials = await Promise.all(
     rawSocials.map(async (item) => {
       const group = item?.link || {};
       const icon = await resolveImage(group.social_icon);
       const linkField = group.social_link || {};
       return {
         icon,
-        href: linkField.url || "#",
-        target: linkField.target || "_self",
+        href: typeof linkField.url === "string" ? linkField.url.trim() : "",
         text: group.social_text || "",
       };
     })
+  );
+
+  /*
+   * A social icon pointing at "#" is a dead link, not a social profile.
+   * Until a real URL is set in the ACF options, the row is not rendered
+   * at all rather than shipping something that goes nowhere.
+   */
+  const socials = resolvedSocials.filter(
+    (s) => s.href && s.href !== "#" && !s.href.startsWith("#")
   );
 
   return (
@@ -71,14 +88,27 @@ export default async function Footer() {
             {phone && (
               <>
                 <p className="site-footer__label">PHONE</p>
-                <p className="site-footer__value">{phone}</p>
+                {telHref(phone) ? (
+                  <a href={telHref(phone)} className="site-footer__value site-footer__link">
+                    {phone}
+                  </a>
+                ) : (
+                  <p className="site-footer__value">{phone}</p>
+                )}
               </>
             )}
             {address && (
-              <p
-                className="site-footer__address"
-                dangerouslySetInnerHTML={{ __html: address.replace(/\n/g, "<br />") }}
-              />
+              <address className="site-footer__address">
+                {address
+                  .split(/<br\s*\/?>|\n/i)
+                  .map((line) => stripHtml(line))
+                  .filter(Boolean)
+                  .map((line, i) => (
+                    <span key={i} className="site-footer__address-line">
+                      {line}
+                    </span>
+                  ))}
+              </address>
             )}
           </div>
 
@@ -102,20 +132,22 @@ export default async function Footer() {
                   <a
                     key={i}
                     href={s.href}
-                    target={s.target || "_blank"}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="site-footer__social-link"
                   >
                     {s.icon ? (
                       <Image
                         src={s.icon.url}
-                        alt={s.icon.alt || s.text}
+                        alt=""
+                        aria-hidden="true"
                         width={16}
                         height={16}
                         className="site-footer__social-icon"
                       />
                     ) : null}
-                    {s.text}
+                    <span>{s.text}</span>
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 ))}
               </div>

@@ -3,6 +3,10 @@ import { notFound } from "next/navigation";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import { getPageBySlug, getMediaById } from "@/lib/wordpress";
+import { buildMetadata } from "@/lib/site";
+import { stripHtml } from "@/lib/html";
+
+export const revalidate = 600;
 
 async function resolveImage(field) {
   if (!field) return null;
@@ -45,10 +49,13 @@ const featureIcons = [
 
 export async function generateMetadata() {
   const page = await getPageBySlug("contact-us");
-  return {
-    title: page?.acf?.seo_title || page?.title?.rendered || "Contact Us — Merwadj",
-    description: page?.acf?.seo_description || undefined,
-  };
+  return buildMetadata({
+    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Contact Us",
+    description:
+      page?.acf?.seo_description ||
+      "Share your project parameters and we will respond with tailored material solutions and technical specifications.",
+    path: "/contact",
+  });
 }
 
 export default async function ContactPage() {

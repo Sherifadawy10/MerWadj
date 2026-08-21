@@ -1732,15 +1732,23 @@ main:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-    --enter: 0s;
   }
 
+  /*
+   * Delay has to go along with duration. The entrance animations are
+   * `both`-filled and start as late as 2.4s, so zeroing only the duration
+   * left the hero copy, the header and the CTA holding their `from` state
+   * — invisible — for the whole delay. Caught in Firefox with reduced
+   * motion on: the home page rendered as a bare background image.
+   */
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 

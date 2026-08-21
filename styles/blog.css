@@ -150,7 +150,7 @@
 }
 
 .blog-subscribe__input::placeholder {
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .blog-subscribe__input:focus {

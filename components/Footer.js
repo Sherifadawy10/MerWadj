@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getFooterOptions, getMediaById, getMenu, withContactLink } from "@/lib/wordpress";
-import { stripHtml } from "@/lib/html";
 
 async function resolveImage(field) {
   if (!field) return null;
@@ -98,17 +97,10 @@ export default async function Footer() {
               </>
             )}
             {address && (
-              <address className="site-footer__address">
-                {address
-                  .split(/<br\s*\/?>|\n/i)
-                  .map((line) => stripHtml(line))
-                  .filter(Boolean)
-                  .map((line, i) => (
-                    <span key={i} className="site-footer__address-line">
-                      {line}
-                    </span>
-                  ))}
-              </address>
+              <p
+                className="site-footer__address"
+                dangerouslySetInnerHTML={{ __html: address.replace(/\n/g, "<br />") }}
+              />
             )}
           </div>
 

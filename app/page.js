@@ -1,5 +1,4 @@
 import Hero from "@/components/Hero";
-import Footer from "@/components/Footer";
 import { getHomePage } from "@/lib/wordpress";
 import { buildMetadata, SITE_NAME } from "@/lib/site";
 
@@ -34,7 +33,6 @@ export default async function HomePage() {
   return (
     <>
       <Hero page={homepage} />
-      <Footer />
     </>
   );
 }

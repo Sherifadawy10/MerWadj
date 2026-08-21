@@ -2,15 +2,20 @@ import "@/styles/post.css";
 import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/lib/wordpress";
 import Footer from "@/components/Footer";
+import { buildMetadata } from "@/lib/site";
+import { stripHtml } from "@/lib/html";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function generateMetadata() {
   const page = await getPageBySlug("privacy-policy");
-  return {
-    title: page?.acf?.seo_title || page?.title?.rendered || "Privacy Policy — Merwadj",
-    description: page?.acf?.seo_description || undefined,
-  };
+  return buildMetadata({
+    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Privacy Policy",
+    description:
+      page?.acf?.seo_description ||
+      "How MERWADJ collects, uses and protects personal information submitted through this website.",
+    path: "/privacy-policy",
+  });
 }
 
 export default async function PrivacyPolicyPage() {

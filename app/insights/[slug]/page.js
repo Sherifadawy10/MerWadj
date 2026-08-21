@@ -5,8 +5,10 @@ import { notFound } from "next/navigation";
 import { getInsightBySlug } from "@/lib/wordpress";
 import PostShareButtons from "@/components/PostShareButtons";
 import Footer from "@/components/Footer";
+import { articleSchema, buildMetadata } from "@/lib/site";
+import { excerptFrom, stripHtml } from "@/lib/html";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 300;
 
 function getAuthorPhotoUrl(field) {
   if (!field) return null;
@@ -32,8 +34,7 @@ function formatDate(dateStr) {
 
 function calcReadTime(content) {
   if (!content) return null;
-  const text = content.replace(/<[^>]+>/g, " ").trim();
-  const words = text.split(/\s+/).filter(Boolean).length;
+  const words = stripHtml(content).split(/\s+/).filter(Boolean).length;
   if (!words) return null;
   const minutes = Math.max(1, Math.ceil(words / 200));
   return `${minutes} min read`;
@@ -42,11 +43,23 @@ function calcReadTime(content) {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getInsightBySlug(slug);
-  if (!post) return { title: "Insight not found" };
-  return {
-    title: post?.acf?.seo_title || post.title?.rendered,
-    description: post?.acf?.seo_description || post.excerpt?.rendered?.replace(/<[^>]+>/g, "").trim() || undefined,
-  };
+  if (!post) {
+    return buildMetadata({
+      title: "Insight not found",
+      path: `/insights/${slug}`,
+      noIndex: true,
+    });
+  }
+
+  return buildMetadata({
+    title: post?.acf?.seo_title || stripHtml(post.title?.rendered),
+    description:
+      post?.acf?.seo_description || excerptFrom(post.excerpt?.rendered, 180) || undefined,
+    path: `/insights/${slug}`,
+    image: post.featuredImage?.sourceUrl || undefined,
+    type: "article",
+    publishedTime: post.date_gmt ? `${post.date_gmt}Z` : undefined,
+  });
 }
 
 export default async function InsightPostPage({ params }) {
@@ -64,11 +77,25 @@ export default async function InsightPostPage({ params }) {
   const date = formatDate(post.date);
   const readTime = acf.post_read_time || calcReadTime(post.content?.rendered);
   const meta = [category, date, readTime].filter(Boolean).join(" • ");
-  const excerpt = post.excerpt?.rendered?.replace(/<[^>]+>/g, "").trim();
+  const excerpt = stripHtml(post.excerpt?.rendered);
   const caption = post.featuredImage?.caption || "";
+
+  const schema = articleSchema({
+    title: stripHtml(post.title?.rendered),
+    description: excerpt || undefined,
+    path: `/insights/${slug}`,
+    image: post.featuredImage?.sourceUrl || undefined,
+    published: post.date_gmt ? `${post.date_gmt}Z` : undefined,
+    modified: post.modified_gmt ? `${post.modified_gmt}Z` : undefined,
+    author: authorName || undefined,
+  });
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       <div className="post-page">
 
         {/* ── Narrow header: back / meta / title / excerpt / author ── */}

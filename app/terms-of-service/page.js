@@ -2,17 +2,22 @@ import "@/styles/post.css";
 import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/lib/wordpress";
 import Footer from "@/components/Footer";
+import { buildMetadata } from "@/lib/site";
+import { stripHtml } from "@/lib/html";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export async function generateMetadata() {
   const page =
     (await getPageBySlug("terms-of-service")) ??
     (await getPageBySlug("terms"));
-  return {
-    title: page?.acf?.seo_title || page?.title?.rendered || "Terms of Service — Merwadj",
-    description: page?.acf?.seo_description || undefined,
-  };
+  return buildMetadata({
+    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Terms of Service",
+    description:
+      page?.acf?.seo_description ||
+      "The terms that govern use of the MERWADJ website and the information published on it.",
+    path: "/terms-of-service",
+  });
 }
 
 export default async function TermsOfServicePage() {

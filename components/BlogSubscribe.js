@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 
 export default function BlogSubscribe({ title, text }) {
+  const uid = useId();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | done
 
@@ -25,14 +26,20 @@ export default function BlogSubscribe({ title, text }) {
         <p className="blog-subscribe__desc">{desc}</p>
 
         {status === "done" ? (
-          <p className="blog-subscribe__thanks">
+          <p className="blog-subscribe__thanks" role="status" aria-live="polite">
             Thank you — you&apos;re now subscribed.
           </p>
         ) : (
           <form className="blog-subscribe__form" onSubmit={handleSubmit} noValidate>
+            <label htmlFor={`${uid}-email`} className="sr-only">
+              Your email address
+            </label>
             <input
+              id={`${uid}-email`}
+              name="email"
               className="blog-subscribe__input"
               type="email"
+              autoComplete="email"
               placeholder="Your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

@@ -9,13 +9,20 @@ import AboutValues from "@/components/AboutValues";
 import AboutCommitments from "@/components/AboutCommitments";
 import AboutServe from "@/components/AboutServe";
 import { getPageBySlug } from "@/lib/wordpress";
+import { buildMetadata } from "@/lib/site";
+import { stripHtml } from "@/lib/html";
+
+export const revalidate = 600;
 
 export async function generateMetadata() {
   const page = await getPageBySlug("about");
-  return {
-    title: page?.acf?.seo_title || page?.title?.rendered || "About — Merwadj",
-    description: page?.acf?.seo_description || "Beautiful Materials | Verified Impact",
-  };
+  return buildMetadata({
+    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "About",
+    description:
+      page?.acf?.seo_description ||
+      "Beautiful materials, verified impact. How MERWADJ sources, engineers and delivers responsible stone finishes.",
+    path: "/about",
+  });
 }
 
 export default async function AboutPage() {

@@ -1,5 +1,5 @@
 import HeaderClient from "@/components/HeaderClient";
-import { getMenu, getSiteOptions } from "@/lib/wordpress";
+import { getMenu, getSiteOptions, sanitizeInlineSvg, withContactLink } from "@/lib/wordpress";
 
 export default async function Header() {
   let menu = [];
@@ -11,11 +11,9 @@ export default async function Header() {
       getMenu("primary_menu"),
       getSiteOptions(),
     ]);
-    menu = menuData;
-    const raw = options?.logo;
-    const rawBlack = options?.black_logo || options?.["black-logo"];
-    logoSvg = typeof raw === "string" && raw.trim() ? raw.trim() : null;
-    blackLogoSvg = typeof rawBlack === "string" && rawBlack.trim() ? rawBlack.trim() : null;
+    menu = withContactLink(menuData);
+    logoSvg = sanitizeInlineSvg(options?.logo);
+    blackLogoSvg = sanitizeInlineSvg(options?.black_logo || options?.["black-logo"]);
   } catch (error) {
     console.error(error);
   }

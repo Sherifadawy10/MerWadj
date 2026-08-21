@@ -6,15 +6,20 @@ import InsightsBlock from "@/components/InsightsBlock";
 import BlogSubscribe from "@/components/BlogSubscribe";
 import PageReveal from "@/components/PageReveal";
 import { getPageBySlug, getPosts, getInsights } from "@/lib/wordpress";
+import { buildMetadata } from "@/lib/site";
+import { stripHtml } from "@/lib/html";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 120;
 
 export async function generateMetadata() {
   const page = await getPageBySlug("blog");
-  return {
-    title: page?.acf?.seo_title || page?.title?.rendered || "Blog — Merwadj",
-    description: page?.acf?.seo_description || "Insights, ideas, and expertise to help you elevate customer experience.",
-  };
+  return buildMetadata({
+    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Research & Insights",
+    description:
+      page?.acf?.seo_description ||
+      "Technical writing on material selection, embodied carbon and supplier verification.",
+    path: "/blog",
+  });
 }
 
 export default async function BlogPage() {

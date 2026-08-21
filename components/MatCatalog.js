@@ -113,7 +113,7 @@ export default function MatCatalog({ eyebrow, title, stones = [] }) {
     <section className="mat-catalog">
       <div className="mat-catalog__header">
         {eyebrow && <p className="mat-catalog__eyebrow">{eyebrow}</p>}
-        {title && <h2 className="mat-catalog__title">{title}</h2>}
+        {title && <h1 className="mat-catalog__title">{title}</h1>}
       </div>
 
       {categories.length > 0 && (

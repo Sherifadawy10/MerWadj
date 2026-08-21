@@ -618,10 +618,3 @@
 }
 
 /* ── /Mat Collection ──────────────────────────────────────── */
-
-/* 44px minimum touch target on the collection filters (was 37px tall). */
-.mat-catalog__filter-item {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}

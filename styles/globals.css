@@ -145,26 +145,12 @@
 
 :root {
   color-scheme: light;
-  /*
-   * Every entrance animation is offset from the end of the preloader.
-   * When the preloader is skipped (already seen this session, or reduced
-   * motion) the offset collapses to zero and the page arrives at once.
-   */
-  --enter: 0.65s;
   --bg: #0f0e0d;
   --panel: rgba(22, 21, 19, 0.82);
   --line: rgba(255, 255, 255, 0.14);
   --text: #f5f2ec;
   --muted: rgba(245, 242, 236, 0.72);
   --accent: #d7c1a2;
-}
-
-html[data-preloaded="1"] {
-  --enter: 0s;
-}
-
-html[data-preloaded="1"] .preloader {
-  display: none;
 }
 
 html {
@@ -207,7 +193,7 @@ a {
   display: grid;
   place-items: center;
   pointer-events: none;
-  animation: preloaderHide 0s ease 1.3s both;
+  animation: preloaderHide 0s ease 2.6s both;
 }
 
 @keyframes preloaderHide {
@@ -230,13 +216,13 @@ a {
 .preloader__panel--top {
   top: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  animation: preloaderSlideUp 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.7s both;
+  animation: preloaderSlideUp 1s cubic-bezier(0.76, 0, 0.24, 1) 1.45s both;
 }
 
 .preloader__panel--bottom {
   bottom: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-  animation: preloaderSlideDown 0.6s cubic-bezier(0.76, 0, 0.24, 1) 0.7s both;
+  animation: preloaderSlideDown 1s cubic-bezier(0.76, 0, 0.24, 1) 1.45s both;
 }
 
 @keyframes preloaderSlideUp {
@@ -256,8 +242,8 @@ a {
   align-items: center;
   gap: 1rem;
   animation:
-    preloaderLogoReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both,
-    preloaderInnerFade  0.3s  ease                          0.7s  both;
+    preloaderLogoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.3s  both,
+    preloaderInnerFade  0.4s ease                           1.45s both;
 }
 
 @keyframes preloaderLogoReveal {
@@ -270,7 +256,7 @@ a {
 }
 
 .preloader__logo-wrap {
-  animation: preloaderFloat 2.4s ease-in-out infinite;
+  animation: preloaderFloat 2s ease-in-out infinite;
 }
 
 .preloader__logo {
@@ -300,7 +286,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  animation: headerItemReveal 0.8s ease calc(var(--enter) + 0.3s) both;
+  animation: headerItemReveal 0.8s ease 1.95s both;
 }
 
 .site-header__brand img{
@@ -327,7 +313,7 @@ a {
   gap: 3px;
   border: none;
   background: transparent;
-  animation: headerItemReveal 0.8s ease calc(var(--enter) + 0.4s) both;
+  animation: headerItemReveal 0.8s ease 2.15s both;
   cursor: pointer;
 }
 
@@ -435,10 +421,8 @@ a {
 
 /* Each nav link — slides in from the right (matching panel direction) */
 .menu-panel__link {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 8px 28px;
+  display: block;
+  padding: 6px 28px;
   font-family: "Futura PT", sans-serif;
   color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
@@ -546,7 +530,7 @@ a {
   mask-image: linear-gradient(to right, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
   mask-repeat: no-repeat;
-  animation: heroReveal 1.6s ease-out calc(var(--enter) + 0.2s) both;
+  animation: heroReveal 1.6s ease-out 1.7s both;
   font-weight: 400;
   font-size: 40px;
   line-height: 150%;
@@ -561,7 +545,7 @@ a {
   mask-image: linear-gradient(to right, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
   mask-repeat: no-repeat;
-  animation: heroReveal 1.6s ease-out calc(var(--enter) + 0.3s) both;
+  animation: heroReveal 1.6s ease-out 1.95s both;
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
@@ -597,7 +581,7 @@ a {
   text-align: center;
   vertical-align: middle;
   text-transform: uppercase;
-  animation: heroFadeIn 1.4s ease-out calc(var(--enter) + 0.55s) both, heroBorderDraw 1.6s ease-out calc(var(--enter) + 0.55s) forwards;
+  animation: heroFadeIn 1.4s ease-out 2.4s both, heroBorderDraw 1.6s ease-out 2.4s forwards;
   isolation: isolate;
 }
 
@@ -904,7 +888,7 @@ a {
   mask-image: linear-gradient(to right, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
   mask-repeat: no-repeat;
-  animation: heroReveal 1.4s ease-out calc(var(--enter) + 0.1s) both;
+  animation: heroReveal 1.4s ease-out 1.5s both;
 }
 
 .founders-hero__row {
@@ -944,7 +928,7 @@ a {
   mask-image: linear-gradient(to right, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
   mask-repeat: no-repeat;
-  animation: heroReveal 1.6s ease-out calc(var(--enter) + 0.3s) both;
+  animation: heroReveal 1.6s ease-out 1.9s both;
 }
 
 /* Founder cards */
@@ -2006,32 +1990,36 @@ main:focus-visible {
   }
 }
 
-.site-footer__address {
-  font-style: normal;
-  display: flex;
-  flex-direction: column;
-}
 
-.site-footer__address-line {
-  display: block;
-}
 
-/* Footer phone and email are links; give them a 44px tap target. */
-.site-footer__link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-}
 
-/* Footer navigation rows were 20px tall; give every one a real tap target. */
+/*
+ * Touch targets.
+ *
+ * Every one of these is grown with an overlay rather than by changing the
+ * box, so nothing on screen moves. The visual rhythm the designer set is
+ * exactly as it was; only the region that responds to a finger is larger.
+ */
+.menu-panel__link,
 .site-footer__nav-link,
 .site-footer__legal-link,
-.site-footer__social-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
+.site-footer__social-link,
+.site-footer__link,
+.mat-catalog__filter-item {
+  position: relative;
 }
 
-.site-footer__col--nav {
-  gap: 0;
+.menu-panel__link::after,
+.site-footer__nav-link::after,
+.site-footer__legal-link::after,
+.site-footer__social-link::after,
+.site-footer__link::after,
+.mat-catalog__filter-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 44px;
+  transform: translateY(-50%);
 }

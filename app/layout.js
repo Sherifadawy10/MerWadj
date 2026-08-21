@@ -1,12 +1,11 @@
 import "@/styles/globals.css";
-import Script from "next/script";
 import Header from "@/components/Header";
 import PreloaderManager from "@/components/PreloaderManager";
-import { PRELOADER_SESSION_KEY } from "@/lib/preloader";
 import SiteAnimations from "@/components/SiteAnimations";
 import CookieConsent from "@/components/CookieConsent";
 import Analytics from "@/components/Analytics";
 import { getSiteOptions, sanitizeInlineSvg } from "@/lib/wordpress";
+import { PRELOADER_MARK_SVG } from "@/lib/preloader-mark";
 import { stripHtml } from "@/lib/html";
 import {
   OG_IMAGE,
@@ -47,12 +46,6 @@ export const viewport = {
   colorScheme: "dark",
 };
 
-/*
- * Runs before the preloader markup paints, so a visitor who has already
- * seen it this session never gets a flash of it on the next page.
- */
-const PRELOADER_FLAG_SCRIPT = `try{if(sessionStorage.getItem('${PRELOADER_SESSION_KEY}')==='1'){document.documentElement.setAttribute('data-preloaded','1')}}catch(e){}`;
-
 function socialUrls(options) {
   const raw = Array.isArray(options?.social_links) ? options.social_links : [];
   return raw
@@ -68,7 +61,13 @@ export default async function RootLayout({ children }) {
     options = {};
   }
 
-  const preloaderSvg = sanitizeInlineSvg(options?.preloader);
+  /*
+   * The ACF value is the designer's mark with a 470 KB base64 PNG inside.
+   * sanitizeInlineSvg() rejects it on size, and we substitute the same
+   * artwork pointing at a cached file. If an editor ever replaces the
+   * field with a genuine vector, that is used as-is instead.
+   */
+  const preloaderSvg = sanitizeInlineSvg(options?.preloader) || PRELOADER_MARK_SVG;
 
   const schema = organizationSchema({
     phone: options?.phone || undefined,
@@ -80,10 +79,6 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="site-body">
-        <Script id="preloader-flag" strategy="beforeInteractive">
-          {PRELOADER_FLAG_SCRIPT}
-        </Script>
-
         <a href="#main" className="skip-link">
           Skip to main content
         </a>

@@ -95,7 +95,7 @@ export default function HeaderClient({ menu = [], logoSvg = null, blackLogoSvg =
               <span aria-hidden="true" dangerouslySetInnerHTML={{ __html: activeSvg }} />
             ) : (
               /* eslint-disable-next-line @next/next/no-img-element */
-              <img src="/logo.svg" alt="" aria-hidden="true" width={48} height={48} />
+              <img src="/logo.svg" alt="" aria-hidden="true" width={58} height={58} />
             )}
           </Link>
 

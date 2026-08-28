@@ -6,6 +6,7 @@ import { getPostBySlug } from "@/lib/wordpress";
 import PostShareButtons from "@/components/PostShareButtons";
 import Footer from "@/components/Footer";
 import { articleSchema, buildMetadata } from "@/lib/site";
+import { INSIGHTS_ENABLED } from "@/lib/features";
 import { excerptFrom, stripHtml } from "@/lib/html";
 
 export const revalidate = 300;
@@ -41,6 +42,10 @@ function calcReadTime(content) {
 }
 
 export async function generateMetadata({ params }) {
+  if (!INSIGHTS_ENABLED) {
+    return buildMetadata({ title: "Page not found", path: "/404", noIndex: true });
+  }
+
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) {
@@ -63,6 +68,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function BlogPostPage({ params }) {
+  if (!INSIGHTS_ENABLED) notFound();
+
   const { slug } = await params;
   const post = await getPostBySlug(slug);
   if (!post) notFound();

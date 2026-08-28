@@ -1,5 +1,6 @@
 import { absoluteUrl } from "@/lib/site";
 import { getContentIndex } from "@/lib/wordpress";
+import { INSIGHTS_ENABLED } from "@/lib/features";
 
 export const revalidate = 3600;
 
@@ -24,17 +25,23 @@ export default async function sitemap() {
   const now = new Date();
   const { posts, insights } = await getContentIndex();
 
-  const entries = STATIC_ROUTES.map((route) => ({
+  const routes = INSIGHTS_ENABLED
+    ? STATIC_ROUTES
+    : STATIC_ROUTES.filter((route) => route.path !== "/blog");
+
+  const entries = routes.map((route) => ({
     url: absoluteUrl(route.path),
     lastModified: now,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }));
 
-  for (const [prefix, items] of [
-    ["/blog", posts],
-    ["/insights", insights],
-  ]) {
+  for (const [prefix, items] of INSIGHTS_ENABLED
+    ? [
+        ["/blog", posts],
+        ["/insights", insights],
+      ]
+    : []) {
     for (const item of items) {
       entries.push({
         url: absoluteUrl(`${prefix}/${item.slug}`),

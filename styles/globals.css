@@ -1383,9 +1383,22 @@ a {
     gap: 32px;
   }
 
+  /*
+   * Portrait, same as on desktop.
+   *
+   * This used to be 4 / 3. Both founder photographs are portrait (676x880
+   * and 338x440), so a landscape frame with object-fit: cover showed only
+   * the middle 57% of the image and cut 21.3% off the top and bottom —
+   * which is exactly where the heads are. The client asked why their heads
+   * were cut; this is why.
+   *
+   * At 3 / 4 the frame ratio (0.750) is almost the image ratio (0.768), so
+   * the crop is a couple of percent off the sides and nothing vertical is
+   * lost. The photographs appear as they were framed.
+   */
   .founder-card__photo,
   .founder-card__photo-placeholder {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 4;
   }
 
   .founder-card__mid {

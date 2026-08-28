@@ -1,4 +1,5 @@
 import "@/styles/blog.css";
+import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import BlogHero from "@/components/BlogHero";
 import PostCard from "@/components/PostCard";
@@ -7,11 +8,16 @@ import BlogSubscribe from "@/components/BlogSubscribe";
 import PageReveal from "@/components/PageReveal";
 import { getPageBySlug, getPosts, getInsights } from "@/lib/wordpress";
 import { buildMetadata } from "@/lib/site";
+import { INSIGHTS_ENABLED } from "@/lib/features";
 import { stripHtml } from "@/lib/html";
 
 export const revalidate = 120;
 
 export async function generateMetadata() {
+  if (!INSIGHTS_ENABLED) {
+    return buildMetadata({ title: "Page not found", path: "/404", noIndex: true });
+  }
+
   const page = await getPageBySlug("blog");
   return buildMetadata({
     title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Research & Insights",
@@ -23,6 +29,8 @@ export async function generateMetadata() {
 }
 
 export default async function BlogPage() {
+  if (!INSIGHTS_ENABLED) notFound();
+
   const [page, posts, insights] = await Promise.all([
     getPageBySlug("blog"),
     getPosts(),

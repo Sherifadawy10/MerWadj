@@ -1,6 +1,5 @@
 import HeaderClient from "@/components/HeaderClient";
 import { getMenu, getSiteOptions, sanitizeInlineSvg, withContactLink } from "@/lib/wordpress";
-import { filterInsightsFromMenu } from "@/lib/features";
 
 export default async function Header() {
   let menu = [];
@@ -12,7 +11,7 @@ export default async function Header() {
       getMenu("primary_menu"),
       getSiteOptions(),
     ]);
-    menu = filterInsightsFromMenu(withContactLink(menuData));
+    menu = withContactLink(menuData);
     logoSvg = sanitizeInlineSvg(options?.logo);
     blackLogoSvg = sanitizeInlineSvg(options?.black_logo || options?.["black-logo"]);
   } catch (error) {

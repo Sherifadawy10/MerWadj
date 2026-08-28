@@ -1,5 +1,4 @@
 import "@/styles/blog.css";
-import { notFound } from "next/navigation";
 import Footer from "@/components/Footer";
 import BlogHero from "@/components/BlogHero";
 import PostCard from "@/components/PostCard";
@@ -14,13 +13,20 @@ import { stripHtml } from "@/lib/html";
 export const revalidate = 120;
 
 export async function generateMetadata() {
+  const page = await getPageBySlug("blog");
+  const title =
+    page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Research & Insights";
+
   if (!INSIGHTS_ENABLED) {
-    return buildMetadata({ title: "Page not found", path: "/404", noIndex: true });
+    return buildMetadata({
+      title,
+      description: "Our research is being prepared for publication.",
+      path: "/blog",
+    });
   }
 
-  const page = await getPageBySlug("blog");
   return buildMetadata({
-    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Research & Insights",
+    title,
     description:
       page?.acf?.seo_description ||
       "Technical writing on material selection, embodied carbon and supplier verification.",
@@ -29,13 +35,42 @@ export async function generateMetadata() {
 }
 
 export default async function BlogPage() {
-  if (!INSIGHTS_ENABLED) notFound();
+  const page = await getPageBySlug("blog");
 
-  const [page, posts, insights] = await Promise.all([
-    getPageBySlug("blog"),
-    getPosts(),
-    getInsights(),
-  ]);
+  /*
+   * Articles unpublished, page intact.
+   *
+   * The hero stays exactly as designed and the body says the research is
+   * on its way. No post cards, no insights strip, no subscribe form —
+   * those all render the writing that is being withheld.
+   */
+  if (!INSIGHTS_ENABLED) {
+    return (
+      <>
+        <BlogHero page={page} />
+
+        <section className="blog-soon">
+          <div className="blog-soon__inner">
+            <p className="blog-soon__eyebrow">Coming soon</p>
+            <h2 className="blog-soon__title">Our research is on its way</h2>
+            <p className="blog-soon__text">
+              We are preparing our material research for publication. In the
+              meantime, our specialists are glad to discuss specifications,
+              sourcing and performance data for a project directly.
+            </p>
+            <a href="/contact" className="blog-soon__cta">
+              Talk to a specialist
+            </a>
+          </div>
+        </section>
+
+        <PageReveal />
+        <Footer />
+      </>
+    );
+  }
+
+  const [posts, insights] = await Promise.all([getPosts(), getInsights()]);
 
   return (
     <>

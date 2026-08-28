@@ -25,11 +25,9 @@ export default async function sitemap() {
   const now = new Date();
   const { posts, insights } = await getContentIndex();
 
-  const routes = INSIGHTS_ENABLED
-    ? STATIC_ROUTES
-    : STATIC_ROUTES.filter((route) => route.path !== "/blog");
-
-  const entries = routes.map((route) => ({
+  /* /blog stays listed: it is a real page with its hero while the
+     articles are unpublished. Only the articles drop out below. */
+  const entries = STATIC_ROUTES.map((route) => ({
     url: absoluteUrl(route.path),
     lastModified: now,
     changeFrequency: route.changeFrequency,

@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { getFooterOptions, getMediaById, getMenu, withContactLink } from "@/lib/wordpress";
-import { filterInsightsFromMenu } from "@/lib/features";
 
 async function resolveImage(field) {
   if (!field) return null;
@@ -36,7 +35,7 @@ export default async function Footer() {
     getMenu("footer_legal_menu"),
   ]);
 
-  const footerNav = filterInsightsFromMenu(withContactLink(rawFooterNav));
+  const footerNav = withContactLink(rawFooterNav);
 
   const acfBg = await resolveImage(options?.["footer-background"]);
   const bgUrl = acfBg?.url || null;

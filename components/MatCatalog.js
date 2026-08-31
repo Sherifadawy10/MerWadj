@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import Image from "next/image";
+import { stripHtml } from "@/lib/html";
 
 function decodeHtml(str) {
   if (!str) return "";
@@ -262,7 +263,12 @@ function MatModal({ stone, onClose }) {
             <p className="mat-modal__code">{acf.stone_code}</p>
           )}
           {acf.stone_description && (
-            <p className="mat-modal__desc">{acf.stone_description}</p>
+            /*
+             * ACF stores this in a wysiwyg field, so the REST value comes
+             * back wrapped in <p>. Printed as a text node, those tags were
+             * visible to the user.
+             */
+            <p className="mat-modal__desc">{stripHtml(acf.stone_description)}</p>
           )}
           {acf.stone_thicknesses && (
             <div className="mat-modal__spec">

@@ -49,7 +49,7 @@ export default function AboutName({ page }) {
   const togetherDescription = acf.name_together_description || fallback.together_description;
 
   return (
-    <section className="about-name">
+    <section className="about-name" id="about-content">
       <div className="about-name__inner">
 
         {/* Header row */}

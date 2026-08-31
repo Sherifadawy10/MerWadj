@@ -1,4 +1,4 @@
-import Link from "next/link";
+import ScrollLink from "@/components/ScrollLink";
 
 function getImageUrl(field) {
   if (!field) return "";
@@ -27,7 +27,17 @@ export default function AboutHero({ page }) {
   const subtitleLine1 = acf.about_hero_subtitle_line1 || fallback.subtitleLine1;
   const subtitleLine2 = acf.about_hero_subtitle_line2 || fallback.subtitleLine2;
   const buttonText = acf.about_hero_button_text || fallback.buttonText;
-  const buttonUrl = acf.about_hero_button_url || fallback.buttonUrl;
+  /*
+   * "READ MORE" means read on down this page, so it only ever takes a
+   * same-page anchor. The ACF field held /materials, which sent the reader
+   * off to the catalogue instead — reported by the client on 31.08.2026.
+   * An editor can still retarget it, as long as the value is an anchor.
+   */
+  const configuredUrl = acf.about_hero_button_url;
+  const buttonUrl =
+    typeof configuredUrl === "string" && configuredUrl.startsWith("#")
+      ? configuredUrl
+      : fallback.buttonUrl;
 
   return (
     <section className="about-hero-shell">
@@ -45,9 +55,9 @@ export default function AboutHero({ page }) {
             <p>{subtitleLine1}</p>
             <p>{subtitleLine2}</p>
           </div>
-          <Link href={buttonUrl} className="about-hero-button">
+          <ScrollLink href={buttonUrl} className="about-hero-button">
             {buttonText}
-          </Link>
+          </ScrollLink>
         </div>
       </div>
     </section>

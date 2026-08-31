@@ -22,10 +22,18 @@ async function resolveImage(field) {
   return null;
 }
 
-/** Digits only, so the dialler gets something it can actually call. */
+/**
+ * Digits only, so the dialler gets something it can actually call.
+ *
+ * A bare ten-digit number is North American, and this company sells into
+ * hospitality and commercial projects abroad — dialled from outside the US
+ * it would not connect without the country code, so it is added here. What
+ * the footer prints is left alone.
+ */
 function telHref(phone) {
   const digits = String(phone).replace(/[^\d+]/g, "");
-  return digits.length >= 6 ? `tel:${digits}` : null;
+  if (digits.length < 6) return null;
+  return `tel:${/^\d{10}$/.test(digits) ? `+1${digits}` : digits}`;
 }
 
 export default async function Footer() {

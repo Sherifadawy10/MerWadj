@@ -167,6 +167,12 @@
 .about-name {
   background: #191919;
   padding: 130px 60px;
+  /*
+   * Anchor target for the hero's READ MORE. Keeps the section clear of the
+   * fixed header when the browser does the scrolling itself — a direct hit
+   * on /about#about-content, or a reader with reduced motion.
+   */
+  scroll-margin-top: 96px;
 }
 
 .about-name__inner {

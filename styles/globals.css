@@ -874,7 +874,8 @@ a {
 /* Hero */
 
 .founders-hero {
-  padding: 130px 60px 100px;
+  /* Item 21: trimmed the gap down to the founder cards by about a third. */
+  padding: 130px 60px 24px;
 }
 
 .founders-eyebrow {
@@ -924,7 +925,11 @@ a {
   letter-spacing: 0px;
   vertical-align: middle;
   max-width: 470px;
-  margin-left: auto;
+  /*
+   * Item 19: margin-left: auto pushed this to the far right of its column,
+   * leaving 190px of gap between it and the title. The client asked for it
+   * on the left. It now starts where its column starts.
+   */
   mask-image: linear-gradient(to right, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
   mask-repeat: no-repeat;
@@ -971,7 +976,30 @@ a {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/*
+ * Item 20: the label sits over the photo, and on a light frame — Eman's is
+ * concrete and foliage — white on white was barely legible. A gradient
+ * anchored to the bottom of the photo gives it something to sit on. It is
+ * behind the text and ignores the pointer.
+ */
+.founder-card__photo-col::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 38%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.78) 0%,
+    rgba(0, 0, 0, 0.42) 38%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  pointer-events: none;
+}
+
 .founder-card__photo-label {
+  z-index: 1;
   color: #FFF;
   margin: 0;
   font-weight: 300;
@@ -1369,7 +1397,7 @@ a {
 
 @media (max-width: 959px) {
   .founders-hero {
-    padding: 100px 40px 60px;
+    padding: 100px 40px 16px;   /* item 21 */
   }
 
   .founders-hero__row {
@@ -1436,7 +1464,7 @@ a {
 
 @media (max-width: 480px) {
   .founders-hero {
-    padding: 100px 24px 40px;
+    padding: 100px 24px 8px;    /* item 21 */
   }
 
   .founder-card {

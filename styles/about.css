@@ -30,8 +30,19 @@
   position: relative;
   z-index: 1;
   display: flex;
+  /*
+   * Both units have to agree with .about-hero-shell above, which is 100svh
+   * and clips. On a phone 100vh is the tall viewport, measured as though the
+   * browser bars were not there, so min-height: 100vh made this layout taller
+   * than the shell that contains it. The content sits at flex-end, so the
+   * overhang fell past the clip: the second subtitle line was cut in half and
+   * READ MORE disappeared entirely. Reported on two devices, 31.08.2026.
+   *
+   * It never showed up in a headless browser, where there are no bars and
+   * 100vh and 100svh are the same number.
+   */
   height: 100svh;
-  min-height: 100vh;
+  min-height: 100svh;
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;

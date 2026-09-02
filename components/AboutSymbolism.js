@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Reveal from "@/components/Reveal";
+import { localIconFor } from "@/lib/wordpress";
 
 function getImageUrl(field) {
   if (!field) return "";
@@ -61,7 +62,7 @@ export default function AboutSymbolism({ page }) {
 
         <div className="about-symbolism__grid">
           {rawCards.map((card, i) => {
-            const iconUrl = getImageUrl(card.card_icon || card.icon);
+            const iconUrl = localIconFor(getImageUrl(card.card_icon || card.icon));
             const heading = card.card_heading || card.heading || "";
             const text = card.card_text || card.text || "";
             return (

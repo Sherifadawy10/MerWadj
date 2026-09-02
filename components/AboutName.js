@@ -10,6 +10,13 @@ function getImageUrl(field) {
   return "";
 }
 
+/** Strips a leading copy of `lead` from `text`, ignoring case and spacing. */
+function dropLeadingRepeat(text, lead) {
+  if (typeof text !== "string" || typeof lead !== "string" || !lead.trim()) return text;
+  const escaped = lead.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return text.replace(new RegExp(`^\\s*${escaped}\\s*`, "i"), "").trim() || text;
+}
+
 const fallback = {
   eyebrow: "THE NAME",
   title: "MERWADJ",
@@ -45,7 +52,14 @@ export default function AboutName({ page }) {
 
   const togetherEyebrow = acf.name_together_eyebrow || fallback.together_eyebrow;
   const togetherTitleBold = acf.name_together_title_bold || fallback.together_title_bold;
-  const togetherTitleRest = acf.name_together_title_rest || fallback.together_title_rest;
+  /*
+   * The brand name is typed into both ACF fields — "MerWadj" in the bold one
+   * and "MerWadj embodies our philosophy" in the rest — so the heading read
+   * "MERWADJ MERWADJ EMBODIES OUR PHILOSOPHY". Reported by the client on
+   * 31.08.2026. Drop the repeat when the second field opens with the first.
+   */
+  const rawTitleRest = acf.name_together_title_rest || fallback.together_title_rest;
+  const togetherTitleRest = dropLeadingRepeat(rawTitleRest, togetherTitleBold);
   const togetherDescription = acf.name_together_description || fallback.together_description;
 
   return (

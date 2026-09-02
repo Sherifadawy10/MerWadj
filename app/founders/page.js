@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/Footer";
-import { getPageBySlug, getMediaById } from "@/lib/wordpress";
+import { getPageBySlug, getMediaById, displayPageTitle } from "@/lib/wordpress";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/site";
 import { stripHtml } from "@/lib/html";
@@ -11,7 +11,10 @@ export const revalidate = 600;
 export async function generateMetadata() {
   const page = await getPageBySlug("founders");
   return buildMetadata({
-    title: page?.acf?.seo_title || stripHtml(page?.title?.rendered) || "Founders",
+    title:
+      page?.acf?.seo_title ||
+      displayPageTitle(stripHtml(page?.title?.rendered)) ||
+      "Meet Us",
     description:
       page?.acf?.seo_description ||
       "The architects behind MERWADJ, and the engineering discipline they bring to material selection.",

@@ -185,7 +185,7 @@
   margin: 0 0 8px;
   color: #ffffff;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 18px;   /* item 23: slightly larger, both breakpoints */
   line-height: 150%;
   letter-spacing: 0px;
   vertical-align: middle;
@@ -562,3 +562,46 @@
 }
 
 /* ── /Sus CTA ─────────────────────────────────────────────── */
+
+/*
+ * Item 22. The commitment photograph is 2.4:1 and its subject — the
+ * triangular opening, the pool, the planting — sits in the right half; the
+ * left half is deliberately blank so the copy can sit on it at desktop
+ * width. Cropped to the centre of a portrait screen, the only thing left in
+ * frame was that blank wall. Pulled right so the architecture is in shot,
+ * and the wash turned vertical because the copy now sits over the lit part.
+ *
+ * Item 24. The quarry photograph is square and the trucks sit in its lower
+ * third. Centred, the short mobile band cut them off at the bottom edge.
+ */
+@media (max-width: 959px) {
+  .sus-commitment__bg {
+    background-position: 72% center;
+  }
+
+  /*
+   * The copy now sits over the lit half of the frame, so it needs something
+   * to sit on. There is no overlay element in this section — the rules for
+   * .sus-commitment__overlay have no markup behind them — so the wash is a
+   * pseudo-element. .sus-commitment__content is already z-index 1, so it
+   * stays above.
+   */
+  .sus-commitment::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.24) 0%,
+      rgba(0, 0, 0, 0.72) 42%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .sus-cta__image {
+    background-position: center 70%;
+  }
+}

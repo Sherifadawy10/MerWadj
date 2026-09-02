@@ -973,6 +973,14 @@
     position: relative;
     height: 55vw;
     min-height: 300px;
+    /*
+     * Item 6: the image is second in the source so that the copy leads on
+     * desktop, which put it under the text once the grid collapses. The
+     * client asked for it above the text it belongs to. It carries no
+     * caption or alt, so reordering it visually costs nothing in the
+     * reading order.
+     */
+    order: -1;
   }
 }
 
@@ -1087,7 +1095,13 @@
   }
 
   .about-serve__image {
-    min-height: 60vw;
+    /*
+     * Item 7: at 60vw the frame was 390x234 while the photograph is 1440x1800,
+     * so cover kept less than half of it. Matching the frame to the picture's
+     * own 4:5 shows all of it, which is what the client asked for.
+     */
+    aspect-ratio: 4 / 5;
+    min-height: 0;
   }
 
   .about-serve__panel {

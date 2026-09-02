@@ -581,10 +581,11 @@
 
   /*
    * The copy now sits over the lit half of the frame, so it needs something
-   * to sit on. There is no overlay element in this section — the rules for
-   * .sus-commitment__overlay have no markup behind them — so the wash is a
-   * pseudo-element. .sus-commitment__content is already z-index 1, so it
-   * stays above.
+   * to sit on. The overlay div this section's .sus-commitment__overlay rules
+   * were written for is commented out in SusCommitment.js — deliberately, so
+   * it is left alone — which is why the wash here is a pseudo-element
+   * instead. .sus-commitment__content is already z-index 1, so it stays
+   * above.
    */
   .sus-commitment::after {
     content: '';

@@ -2072,3 +2072,23 @@ main:focus-visible {
   height: 44px;
   transform: translateY(-50%);
 }
+
+/*
+ * The overlay must never be taller than the distance between one row and
+ * the next. Where it is, it reaches over the neighbour and takes the
+ * pointer from it: hovering just under "Materials catalog" lit up "About
+ * us" instead, and the highlight jumped between rows as the mouse moved.
+ *
+ * These two lists sit 36px apart, so 44px overhung each neighbour by 8px.
+ * Matching the height to the spacing keeps the rows adjacent without
+ * overlapping. If the spacing ever changes, this has to follow it.
+ */
+.site-footer__nav-link::after {
+  height: 36px;
+}
+
+@media (max-width: 959px) {
+  .mat-catalog__filter-item::after {
+    height: 36px;
+  }
+}

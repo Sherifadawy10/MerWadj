@@ -56,10 +56,45 @@ export default function ContactForm({ buttonText = "BOOK A CONSULTATION" }) {
     }
 
     setStatus("sending");
-    // TODO(B1): POST to /api/contact once the client confirms the destination
-    // mailbox and CRM. Until then nothing is delivered — see the handover doc.
-    await new Promise((r) => setTimeout(r, 800));
-    setStatus("success");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, website: data.get("website") || "" }),
+      });
+      const payload = await response.json().catch(() => ({}));
+
+      if (payload?.ok) {
+        setStatus("success");
+        return;
+      }
+      /* The server revalidates; if it disagrees, show its findings. */
+      if (payload?.errors) {
+        setErrors(payload.errors);
+        setStatus("idle");
+        return;
+      }
+      setStatus("error");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  if (status === "error") {
+    return (
+      <div className="contact-success" role="alert" aria-live="assertive">
+        <p className="contact-success__text">
+          We could not send that just now. Please email{" "}
+          <a href="mailto:Hello@merwadj.com" className="contact-success__link">
+            Hello@merwadj.com
+          </a>{" "}
+          and we will pick it up from there.
+        </p>
+        <button type="button" className="contact-form__submit" onClick={() => setStatus("idle")}>
+          TRY AGAIN
+        </button>
+      </div>
+    );
   }
 
   if (status === "success") {
@@ -74,6 +109,20 @@ export default function ContactForm({ buttonText = "BOOK A CONSULTATION" }) {
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} noValidate>
+      {/*
+        * Honeypot. Hidden from people and from screen readers, and left out
+        * of the tab order — anything that fills it in is a bot, and the
+        * server quietly accepts and discards those.
+        */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="contact-form__trap"
+      />
+
       {FIELDS.map((field) => {
         const id = `${uid}-${field.name}`;
         const errorId = `${id}-error`;

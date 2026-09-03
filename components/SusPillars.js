@@ -1,3 +1,8 @@
+/*
+ * Review 03 item 23. These four are the live copy: the page has no
+ * sus_pillars_* fields in ACF, so this fallback is what renders.
+ * Text is the client's, verbatim.
+ */
 const fallback = {
   heading: "STRUCTURED ACCOUNTABILITY",
   subtitle:
@@ -6,22 +11,22 @@ const fallback = {
     {
       number: "01",
       title: "RESOURCE CONSERVATION",
-      text: "Raw material efficiency. Reduced ecological footprint at extraction. Sourcing with intention.",
+      text: "Raw material efficiency, reduced ecological footprint at extraction, and sourcing with intention.",
     },
     {
       number: "02",
       title: "ETHICAL MANUFACTURING",
-      text: "UN Conventions for labor rights. Safe, fair working conditions. No exceptions.",
+      text: "Alignment with UN Conventions for labor rights. Safe, fair working conditions with no exceptions.",
     },
     {
       number: "03",
       title: "WASTE MANAGEMENT",
-      text: "Recycle water. Reuse stone dust. Minimize packaging waste. Circular economy principles in action.",
+      text: "Water recycling, stone dust reuse, and packaging waste minimization. Circular economy principles in action.",
     },
     {
       number: "04",
       title: "TRANSPARENCY & REPORTING",
-      text: "ISO 14001 and 45001 standards. Transparent LCA data. Ready for your ESG reporting.",
+      text: "ISO 14001 and 45001 alignment, transparent LCA data, and readiness for your ESG reporting.",
     },
   ],
 };

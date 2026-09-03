@@ -53,10 +53,13 @@ export default async function BlogPage() {
           <div className="blog-soon__inner">
             <p className="blog-soon__eyebrow">Coming soon</p>
             <h2 className="blog-soon__title">Our research is on its way</h2>
+            {/* Review 03 item 19: the client's wording, verbatim. */}
             <p className="blog-soon__text">
-              We are preparing our material research for publication. In the
-              meantime, our specialists are glad to discuss specifications,
-              sourcing and performance data for a project directly.
+              We are actively expanding our materials research and technical
+              testing. In the meantime, we welcome the opportunity to
+              collaborate with designers and project teams on material
+              exploration, custom sourcing, and project-specific requirements.
+              Reach out to start a conversation.
             </p>
             <a href="/contact" className="blog-soon__cta">
               Talk to a specialist

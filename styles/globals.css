@@ -896,7 +896,11 @@ a {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
-  align-items: center;
+  /*
+   * The reference sets the intro level with the headline, not centred
+   * against it: the rule starts where the headline starts.
+   */
+  align-items: start;
 }
 
 .founders-hero__title {
@@ -924,16 +928,35 @@ a {
   line-height: 150%;
   letter-spacing: 0px;
   vertical-align: middle;
-  max-width: 470px;
+  /* 430 less the 38px indent is the 392px measure the reference wraps at:
+   * the sentence breaks after "architectural", as it does in the design. */
+  max-width: 430px;
   /*
    * Item 19: margin-left: auto pushed this to the far right of its column,
    * leaving 190px of gap between it and the title. The client asked for it
    * on the left. It now starts where its column starts.
    */
+  /*
+   * The rule beside the intro, from the client reference. A border rather
+   * than a pseudo-element, so it grows with the text instead of needing a
+   * height of its own.
+   */
+  padding-left: 38px;
+  padding-bottom: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.28);
   mask-image: linear-gradient(to right, black 80%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
   mask-repeat: no-repeat;
   animation: heroReveal 1.6s ease-out 1.9s both;
+}
+
+/* The lead phrase carries the sentence; the rest sits under it. */
+.founders-hero__lead {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 150%;
 }
 
 /* Founder cards */
@@ -1403,6 +1426,16 @@ a {
   .founders-hero__row {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+
+  /*
+   * Stacked, the intro is already full width under the headline; a rule
+   * and an indent there would read as a quotation rather than a divider.
+   */
+  .founders-hero__desc {
+    padding-left: 0;
+    padding-bottom: 0;
+    border-left: 0;
   }
 
   .founder-card {

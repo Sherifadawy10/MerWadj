@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Footer from "@/components/Footer";
-import { getPageBySlug, getMediaById, displayPageTitle } from "@/lib/wordpress";
+import { getPageBySlug, getMediaById, displayPageTitle, splitIntroLead } from "@/lib/wordpress";
 import { notFound } from "next/navigation";
 import { buildMetadata } from "@/lib/site";
 import { stripHtml } from "@/lib/html";
@@ -81,7 +81,8 @@ export default async function FoundersPage() {
 
   const acf = page?.acf || {};
 
-  const eyebrow = acf.founders_eyebrow || fallback.eyebrow;
+  /* The CMS still labels this section FOUNDERS; the client asked for Meet Us. */
+  const eyebrow = displayPageTitle(acf.founders_eyebrow || fallback.eyebrow);
   const title = acf.founders_title || fallback.title;
   const description = acf.founders_description || fallback.description;
   const visionTitle = acf.vision_title || fallback.vision_title;
@@ -91,6 +92,8 @@ export default async function FoundersPage() {
   const ctaDesc = acf.cta_description || fallback.cta_description;
   const ctaBtnText = acf.cta_button_text || fallback.cta_button_text;
   const ctaBtnUrl = acf.cta_button_url || fallback.cta_button_url;
+
+  const { lead: introLead, rest: introRest } = splitIntroLead(description);
 
   const ctaBg = await resolveImage(acf.cta_background);
 
@@ -119,7 +122,12 @@ export default async function FoundersPage() {
           <p className="founders-eyebrow">{eyebrow}</p>
           <div className="founders-hero__row">
             <h1 className="founders-hero__title">{title}</h1>
-            <p className="founders-hero__desc">{description}</p>
+            <p className="founders-hero__desc">
+              {introLead && (
+                <span className="founders-hero__lead">{introLead}</span>
+              )}
+              {introRest}
+            </p>
           </div>
         </div>
       </section>

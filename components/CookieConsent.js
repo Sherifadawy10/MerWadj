@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { DENIED, GRANTED, readConsent, writeConsent } from "@/lib/consent";
+import { DENIED, GRANTED, REOPEN_EVENT, readConsent, writeConsent } from "@/lib/consent";
 
 const HAS_ANALYTICS = Boolean(process.env.NEXT_PUBLIC_GA_ID);
 
@@ -20,6 +20,12 @@ export default function CookieConsent() {
   useEffect(() => {
     if (!HAS_ANALYTICS) return;
     if (readConsent() === null) setVisible(true);
+
+    /* "Cookie settings" in the footer brings this back for a visitor who
+     * has already decided and wants to change their answer. */
+    const reopen = () => setVisible(true);
+    window.addEventListener(REOPEN_EVENT, reopen);
+    return () => window.removeEventListener(REOPEN_EVENT, reopen);
   }, []);
 
   /*
@@ -50,8 +56,9 @@ export default function CookieConsent() {
           </h2>
           <p id="cookie-text" className="cookie__text">
             We use analytics cookies to understand which pages are useful. They are
-            not set unless you accept. Essential cookies needed to serve the site are
-            always on. Read our{" "}
+            not set unless you accept, and you can change this later from Cookie
+            settings in the site footer. Essential cookies needed to serve the site
+            are always on. Read our{" "}
             <Link href="/privacy-policy" className="cookie__link">
               Privacy Policy
             </Link>

@@ -79,7 +79,7 @@ export default function CookieConsent() {
             className="cookie__btn cookie__btn--solid"
             onClick={() => decide(GRANTED)}
           >
-            Accept analytics
+            Accept
           </button>
         </div>
       </div>

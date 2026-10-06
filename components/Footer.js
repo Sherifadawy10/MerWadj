@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import CookieSettingsLink from "@/components/CookieSettingsLink";
 import { getFooterOptions, getMediaById, getMenu, withContactLink } from "@/lib/wordpress";
 
 async function resolveImage(field) {
@@ -176,18 +177,21 @@ export default async function Footer() {
         <span className="site-footer__copy">
           {copyright || "© 2025 MERWADJ. All rights reserved."}
         </span>
-        {footerLegal.length > 0 && (
-          <div className="site-footer__legal">
-            {footerLegal.map((item, i) => (
-              <React.Fragment key={item.id}>
-                {i > 0 && <span className="site-footer__legal-sep">|</span>}
-                <Link href={item.href} target={item.target} className="site-footer__legal-link">
-                  {item.title}
-                </Link>
-              </React.Fragment>
-            ))}
-          </div>
-        )}
+        <div className="site-footer__legal">
+          {footerLegal.map((item, i) => (
+            <React.Fragment key={item.id}>
+              {i > 0 && <span className="site-footer__legal-sep">|</span>}
+              <Link href={item.href} target={item.target} className="site-footer__legal-link">
+                {item.title}
+              </Link>
+            </React.Fragment>
+          ))}
+          <CookieSettingsLink
+            withSeparator={footerLegal.length > 0}
+            separatorClassName="site-footer__legal-sep"
+            className="site-footer__legal-link site-footer__legal-link--button"
+          />
+        </div>
       </div>
     </footer>
   );
